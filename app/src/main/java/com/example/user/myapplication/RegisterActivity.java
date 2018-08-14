@@ -22,16 +22,14 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseDatabase databaseGreenSky;
     private DatabaseReference usersDB;
 
+
     public void init() {
         finalReg = (Button) findViewById(R.id.finalReg);
         textName = (EditText) findViewById(R.id.userName);
         textPassword = (EditText) findViewById(R.id.password);
         textVerifyPassword = (EditText) findViewById(R.id.verifyPassword);
-
         databaseGreenSky = FirebaseDatabase.getInstance();
         usersDB = databaseGreenSky.getReference();
-
-
         finalReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (password.equals(verifyPassword)) {
             regComplete = true;
-            user = new User(name, password,userId);
+            user = new User(name, password, userId);
             usersDB.child("users").push().setValue(user);
             userId++;
         } else {
@@ -62,11 +60,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         }
         if (regComplete) {
-            try{
+            try {
                 Intent fb = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(fb);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

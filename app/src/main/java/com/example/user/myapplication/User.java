@@ -6,11 +6,29 @@ public class User {
     private String password;
     private long points;
 
+    public User() {}
+
     public User(String name, String password, long id) {
+        setId(id);
+        setName(name);
+        setPassword(password);
+        setPoints(0);
+    }
+
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setPassword(String password) {
         this.password = password;
-        this.points = 0;
+    }
+
+    public void setPoints(long points) {
+        this.points = points;
     }
 
     public long getId() {
@@ -28,7 +46,5 @@ public class User {
     public long getPoints() {
         return this.points;
     }
-
-
 }
 
