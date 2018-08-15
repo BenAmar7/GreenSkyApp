@@ -1,12 +1,18 @@
 package com.example.user.myapplication;
 
-public class User {
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
+
+public class User implements Serializable {
     private long id;
     private String name;
     private String password;
     private long points;
+    private List<Object> listFlights;
 
-    public User() {}
+    public User() {
+    }
 
     public User(String name, String password, long id) {
         setId(id);
@@ -14,6 +20,7 @@ public class User {
         setPassword(password);
         setPoints(0);
     }
+
 
     public void setId(long id) {
         this.id = id;
@@ -46,5 +53,6 @@ public class User {
     public long getPoints() {
         return this.points;
     }
+
 }
 
