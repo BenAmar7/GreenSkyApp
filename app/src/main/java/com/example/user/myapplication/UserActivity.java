@@ -11,7 +11,7 @@ public class UserActivity extends AppCompatActivity {
     User logedInUser;
     Intent logInIntent;
     TextView userName, userPoints;
-    Button buttonMeals, buttonFlights, buttonInfo;
+    Button buttonFlights, buttonInfo;
 
     public void init() {
         logInIntent = getIntent();
@@ -21,23 +21,15 @@ public class UserActivity extends AppCompatActivity {
         userName.setText("Hello " + logedInUser.getName());
         userPoints.setText("Your sum of points is: " + logedInUser.getPoints());
 
-        buttonMeals = (Button) findViewById(R.id.chooseMeal);
         buttonFlights = (Button) findViewById(R.id.watchUserFlights);
         buttonInfo = (Button) findViewById(R.id.getInformation);
 
-
-        buttonMeals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent na = new Intent(UserActivity.this, MealsActivity.class);
-                startActivity(na);
-            }
-        });
 
         buttonFlights.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent na = new Intent(UserActivity.this, UserFlightsActivity.class);
+                na.putExtra("logedInUser",logedInUser);
                 startActivity(na);
             }
         });

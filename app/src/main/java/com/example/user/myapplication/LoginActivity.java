@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -79,15 +80,17 @@ public class LoginActivity extends AppCompatActivity {
         name = textName.getText().toString();
         password = textPassword.getText().toString();
         for (User user : allUsers) {
-            if((name.equals(user.getName()))&&(password.equals(user.getPassword()))){
+            if ((name.equals(user.getName())) && (password.equals(user.getPassword()))) {
                 moveToNextActivity(user);
             }
         }
+        Toast.makeText(this, "Incorrect Username or Password", Toast.LENGTH_SHORT).show();
+
     }
 
     public void moveToNextActivity(User user) {
         Intent na = new Intent(LoginActivity.this, UserActivity.class);
-        na.putExtra("user",  user);
+        na.putExtra("user", user);
         startActivity(na);
     }
 

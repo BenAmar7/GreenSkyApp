@@ -9,7 +9,7 @@ public class User implements Serializable {
     private String name;
     private String password;
     private long points;
-    private List<Object> listFlights;
+    private List<String> listFlights;
 
     public User() {
     }
@@ -19,6 +19,7 @@ public class User implements Serializable {
         setName(name);
         setPassword(password);
         setPoints(0);
+        setListFlights(Arrays.asList(new String[]{" "}));
     }
 
 
@@ -38,7 +39,23 @@ public class User implements Serializable {
         this.points = points;
     }
 
+    public List<String> getListFlights() {
+        return listFlights;
+    }
+
+    public void setListFlights(List<String> listFlights) {
+        this.listFlights = listFlights;
+    }
+
+    public boolean addFlightToList(String Flight) {
+        if (this.listFlights.add(Flight))
+            return true;
+        else
+            return false;
+    }
+
     public long getId() {
+
         return this.id;
     }
 

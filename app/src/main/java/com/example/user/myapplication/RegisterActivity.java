@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -55,9 +56,10 @@ public class RegisterActivity extends AppCompatActivity {
             user = new User(name, password, userId);
             usersDB.child("users").push().setValue(user);
             userId++;
+            Toast.makeText(this, "Signup completed", Toast.LENGTH_SHORT).show();
         } else {
             regComplete = false;
-
+            Toast.makeText(this, "Password doesn't match", Toast.LENGTH_SHORT).show();
         }
         if (regComplete) {
             try {
