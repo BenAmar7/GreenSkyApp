@@ -57,7 +57,6 @@ public class LoginActivity extends AppCompatActivity {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     User newUser = child.getValue(User.class);
                     allUsers.add(newUser);
-
                 }
             }
 
@@ -82,6 +81,7 @@ public class LoginActivity extends AppCompatActivity {
         for (User user : allUsers) {
             if ((name.equals(user.getName())) && (password.equals(user.getPassword()))) {
                 moveToNextActivity(user);
+                return;
             }
         }
         Toast.makeText(this, "Incorrect Username or Password", Toast.LENGTH_SHORT).show();
