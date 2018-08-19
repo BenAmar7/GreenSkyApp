@@ -1,15 +1,23 @@
 package com.example.user.myapplication;
 
 
+import android.support.annotation.NonNull;
+
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Flight implements Serializable {
     private String numFlight;
     private String takeOff;
     private String Landing;
-    private Map<User, Meal> passengersList;
+    private Map<String, Meal> passengersList;
+    private DataBaseHelper dbHelper = new DataBaseHelper();
 
     public Flight() {
     }
@@ -18,7 +26,7 @@ public class Flight implements Serializable {
         this.numFlight = numFlight;
         this.takeOff = takeOff;
         this.Landing = landing;
-        setPassengersList(new LinkedHashMap<User, Meal>());
+        setPassengersList(new HashMap<String, Meal>());
     }
 
     public String getTakeOff() {
@@ -37,11 +45,11 @@ public class Flight implements Serializable {
         Landing = landing;
     }
 
-    public Map<User, Meal> getPassengersList() {
+    public Map<String, Meal> getPassengersList() {
         return passengersList;
     }
 
-    public void setPassengersList(Map<User, Meal> passengersList) {
+    public void setPassengersList(Map<String, Meal> passengersList) {
         this.passengersList = passengersList;
     }
 
@@ -53,9 +61,15 @@ public class Flight implements Serializable {
         this.numFlight = numFlight;
     }
 
-    public void addUserToList(User user) {
+    public void addUserToList(String user) {
         this.passengersList.put(user, new Meal());
-        user.addFlightToList(this.getNumFlight());
+        dbHelper.getDB().child("users").child(user).child("listFilghts").child(this.getNumFlight()).setValue(this);
+        dbHelper.getDB().child("flights").child(this.getNumFlight()).child("passengersList").setValue(this.getPassengersList());
+    }
+
+    @Override
+    public String toString(){
+        return getNumFlight();
     }
 
 }

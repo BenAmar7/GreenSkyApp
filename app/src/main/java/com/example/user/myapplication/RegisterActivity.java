@@ -26,18 +26,20 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean regComplete;
     private EditText textEMail, textPassword, textVerifyPassword;
     private String name, password, verifyPassword;
-    private FirebaseDatabase databaseGreenSky;
-    private DatabaseReference usersDB;
-    private FirebaseAuth mAuth;
+    private DataBaseHelper dbHelper;
+    //private FirebaseDatabase databaseGreenSky;
+    //private DatabaseReference usersDB;
+    //private FirebaseAuth mAuth;
 
     public void init() {
         finalReg = (Button) findViewById(R.id.finalReg);
         textEMail = (EditText) findViewById(R.id.eMail);
         textPassword = (EditText) findViewById(R.id.password);
         textVerifyPassword = (EditText) findViewById(R.id.verifyPassword);
-        databaseGreenSky = FirebaseDatabase.getInstance();
-        usersDB = databaseGreenSky.getReference();
-        mAuth = FirebaseAuth.getInstance();
+        dbHelper = new DataBaseHelper();
+        //databaseGreenSky = FirebaseDatabase.getInstance();
+        //usersDB = databaseGreenSky.getReference();
+        //mAuth = FirebaseAuth.getInstance();
         finalReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,13 +80,13 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Passwords don't match", Toast.LENGTH_SHORT).show();
             return;
         }
-        mAuth.createUserWithEmailAndPassword(email, password).
+        dbHelper.getmAuth().createUserWithEmailAndPassword(email, password).
                 addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            FirebaseUser user = dbHelper.getmAuth().getCurrentUser();
                             finish();
                             Intent fb = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(fb);
@@ -97,7 +99,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-
+/*
     protected void checkingRegistration() {
         name = textEMail.getText().toString();
         password = textPassword.getText().toString();
@@ -106,7 +108,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (password.equals(verifyPassword)) {
             regComplete = true;
             user = new User(name, password, userId);
-            usersDB.child("users")./*child(String.valueOf(user.getId()))*/push().setValue(user);
+            //usersDB.child("users").child(String.valueOf(user.getId()))push().setValue(user);
             userId++;
             Toast.makeText(this, "Signup completed", Toast.LENGTH_SHORT).show();
 
@@ -122,5 +124,7 @@ public class RegisterActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
+
+
 }
