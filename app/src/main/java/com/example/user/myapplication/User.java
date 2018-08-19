@@ -19,8 +19,6 @@ public class User implements Serializable {
     private String password;
     private long points;
     private List<String> listFlights;
-    //private FirebaseDatabase databaseGreenSky = FirebaseDatabase.getInstance();
-    //private DatabaseReference usersDB = databaseGreenSky.getReference();
 
 
     public User() {

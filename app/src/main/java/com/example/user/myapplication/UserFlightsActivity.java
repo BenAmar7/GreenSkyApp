@@ -10,19 +10,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class UserFlightsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    private Button buttonMeals;
     private User logedInUser;
     private Intent userIntent;
     private ArrayAdapter<String> flightListAdapter;
     private ListView flightsList;
     private List<Flight> flights;
+    private FirebaseDatabase databaseGreenSky;
+    private DatabaseReference usersDB;
 
     public void init() {
+        databaseGreenSky = FirebaseDatabase.getInstance();
+        usersDB = databaseGreenSky.getReference();
+
         userIntent = getIntent();
         logedInUser = (User) userIntent.getSerializableExtra("logedInUser");
         flights = new ArrayList<Flight>();
@@ -33,6 +40,7 @@ public class UserFlightsActivity extends AppCompatActivity implements AdapterVie
         flights.add(new Flight("4444", "14:00", "19:00"));
 
         for (Flight flight : flights) {
+            //addUserToFlight(logedInUser, flight);
             flight.addUserToList(logedInUser); // need to remove the first element in the list of flights in User
         }
 
@@ -42,14 +50,6 @@ public class UserFlightsActivity extends AppCompatActivity implements AdapterVie
         flightsList.setAdapter(flightListAdapter);
         flightsList.setOnItemClickListener(this);
 
-
-        /*buttonMeals = (Button) findViewById(R.id.chooseMeal);
-        buttonMeals.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });*/
     }
 
     @Override
@@ -62,10 +62,19 @@ public class UserFlightsActivity extends AppCompatActivity implements AdapterVie
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Toast.makeText(this, "You clicked on " + position, Toast.LENGTH_SHORT).show();
-        Intent na = new Intent(UserFlightsActivity.this, MealsActivity.class);
+        Flight newFlight = flights.get(position);
+        addUserToFlight(logedInUser, newFlight);
+        /*Intent na = new Intent(UserFlightsActivity.this, MealsActivity.class);
         na.putExtra("logedInUser", logedInUser);
         Flight newFlight = flights.get(position);
-        na.putExtra("flight", newFlight);
-        startActivity(na);
+        //na.putExtra("flight", newFlight);
+        startActivity(na);*/
+    }
+
+    public void addUserToFlight(User user, Flight flight) {
+        //flight.addUserToList(logedInUser); // need to remove the first element in the list of flights in User
+        //update the database
+        String path = "users/" + logedInUser.getId() + "/listFlights";
+        usersDB.child(path).setValue(flight.getNumFlight());
     }
 }
