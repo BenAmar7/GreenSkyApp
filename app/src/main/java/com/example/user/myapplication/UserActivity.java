@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,17 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
-    private DataBaseHelper dbHelper;
+    //private DataBaseHelper dbHelper;
     private FirebaseUser logedInUser;
     private User user;
     private Intent logInIntent;
     private TextView userName, userPoints;
-    private Button buttonFlights, buttonInfo;
+    private Button buttonFlights, buttonInfo, buttonBuyFlights;
     private List<User> allUsers = new ArrayList<>();
 
     public void init() {
         logInIntent = getIntent();
-        dbHelper = new DataBaseHelper();
+        //dbHelper = new DataBaseHelper();
 
         userName = (TextView) findViewById(R.id.userName);
         userPoints = (TextView) findViewById(R.id.userPoints);
@@ -35,12 +36,13 @@ public class UserActivity extends AppCompatActivity {
 
         buttonFlights = (Button) findViewById(R.id.watchUserFlights);
         buttonInfo = (Button) findViewById(R.id.getInformation);
-
+        buttonBuyFlights = (Button) findViewById(R.id.buyFlights);
 
         buttonFlights.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent na = new Intent(UserActivity.this, UserFlightsActivity.class);
+                na.putExtra("user", user);
                 startActivity(na);
             }
         });
@@ -50,6 +52,15 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent na = new Intent(UserActivity.this, InformationActivity.class);
+                startActivity(na);
+            }
+        });
+
+        buttonBuyFlights.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent na = new Intent(UserActivity.this, BuyFlightsActivity.class);
                 startActivity(na);
             }
         });
@@ -69,12 +80,10 @@ public class UserActivity extends AppCompatActivity {
             }
         });s
 */
-        logedInUser = dbHelper.getmAuth().getCurrentUser();
+        logedInUser = DataBaseHelper.getInstance().getmAuth().getCurrentUser();
         String uid = logedInUser.getUid();
-        user = new User(uid);
-        dbHelper.getDB().child("users").child(uid).setValue(user);
-        userName.setText("Hello " + user.getName());
-        userPoints.setText("Your sum of points is: " + user.getPoints());
+        getUserFromDB(uid);
+
     }
 
     @Override
@@ -85,5 +94,61 @@ public class UserActivity extends AppCompatActivity {
 
     }
 
+    public void getLogInUser() {
+        userName.setText("Hello " + user.getName());
+        userPoints.setText("Your sum of points is: " + user.getPoints());
+    }
+
+    public void getUserFromDB(String uId) {
+        DataBaseHelper.getInstance().getDB().child("users").child(uId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                try {
+                    ArrayList<Flight> listFlights = new ArrayList<>();
+                    user = dataSnapshot.getValue(User.class);
+                    Object obj = dataSnapshot.getValue(User.class);
+    /*                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                        Log.d(String.valueOf(1), ""+ds);
+
+                    }*/
+                    for (DataSnapshot snapChild : dataSnapshot.getChildren()) {
+                        for (DataSnapshot snapGrandChild : snapChild.getChildren()) {
+                            //Log.d("GRAND_CHILD_KEY", snapGrandChild.getKey());
+                            //Log.d("GRAND_CHILD_VALUE", String.valueOf(snapGrandChild.getValue()));
+                            Flight flight = snapGrandChild.getValue(Flight.class);
+                            listFlights.add(flight);
+                        }
+                    }
+                    user.setListFlights(listFlights);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //DataBaseHelper.getInstance().getDB().child("users").child(user.getName()).child("listFlights").getKey();
+                //user.setListFlights(DataBaseHelper.getInstance().getDB().child("users").child(user.getName()).child("listFlights").getKey());
+                getLogInUser();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+/*
+    public void getUserFromDB(final String userID, final ProfileActivity activity){
+        dbRef.child(USERS).child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                activity.setUser(user);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError Object ){
+
+            }
+        });
+    }*/
 
 }

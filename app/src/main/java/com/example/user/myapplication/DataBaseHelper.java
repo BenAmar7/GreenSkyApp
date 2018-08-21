@@ -4,12 +4,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class DataBaseHelper {
+import java.io.Serializable;
+
+public class DataBaseHelper implements Serializable {
     private FirebaseDatabase databaseGreenSky;
     private DatabaseReference DB;
     private FirebaseAuth mAuth;
+    private static DataBaseHelper db;
 
-    public DataBaseHelper(){
+    public static DataBaseHelper getInstance(){
+        if (db==null)
+                db= new DataBaseHelper();
+        return db;
+    }
+
+    private DataBaseHelper(){
         databaseGreenSky = FirebaseDatabase.getInstance();
         DB = databaseGreenSky.getReference();
         mAuth = FirebaseAuth.getInstance();

@@ -1,7 +1,9 @@
 package com.example.user.myapplication;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -17,8 +19,8 @@ public class User implements Serializable {
     //private long id;
     private String name;
     private long points;
-    private List<Flight> listFlights;
-    private DataBaseHelper dbHelper = new DataBaseHelper();
+    private ArrayList<Flight> listFlights = new ArrayList<>();
+    //private DataBaseHelper dbHelper = new DataBaseHelper();
 
 
     public User() {
@@ -28,45 +30,25 @@ public class User implements Serializable {
         //setId(id);
         setName(name);
         setPoints(0);
-        setListFlights(Arrays.asList(new Flight[]{null}));
+        //setListFlights(new ArrayList<Flight>());
     }
 
-
-    /* public void setId(long id) {
-         this.id = id;
-     }
- */
     public void setName(String name) {
         this.name = name;
     }
-
 
     public void setPoints(long points) {
         this.points = points;
     }
 
-    public List<Flight> getListFlights() {
-        return listFlights;
-    }
-
-    public void setListFlights(List<Flight> listFlights) {
+    public void setListFlights(ArrayList<Flight> listFlights) {
         this.listFlights = listFlights;
     }
 
-    public boolean addFlightToList(Flight flight) {
-        if (this.listFlights.add(flight)) {
-            dbHelper.getDB().child(getName()).setValue(listFlights);
-            return true;
-        } else
-            return false;
+    public ArrayList<Flight> getListFlights() {
+        return this.listFlights;
     }
 
-    /*
-        public long getId() {
-
-            return this.id;
-        }
-    */
     public String getName() {
         return this.name;
     }

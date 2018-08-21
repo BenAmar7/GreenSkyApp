@@ -32,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private long id, points;
     private String name, password;
     private List<User> allUsers = new ArrayList<>();
-    private DataBaseHelper dbHelper;
+    //private DataBaseHelper dbHelper;
 
     public void init() {
         regButton = (Button) findViewById(R.id.regButton);
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         textPassword = (EditText) findViewById(R.id.logInPassword);
         //databaseGreenSky = FirebaseDatabase.getInstance();
         //usersDB = databaseGreenSky.getReference();
-        dbHelper = new DataBaseHelper();
+        //dbHelper = new DataBaseHelper();
 
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,13 +105,13 @@ public class LoginActivity extends AppCompatActivity {
         name = textName.getText().toString();
         password = textPassword.getText().toString();
 
-        dbHelper.getmAuth().signInWithEmailAndPassword(name, password)
+        DataBaseHelper.getInstance().getmAuth().signInWithEmailAndPassword(name, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = dbHelper.getmAuth().getCurrentUser();
+                            FirebaseUser user = DataBaseHelper.getInstance().getmAuth().getCurrentUser();
                             moveToNextActivity(user);
 
                         } else {

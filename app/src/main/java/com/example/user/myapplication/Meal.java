@@ -1,8 +1,12 @@
 package com.example.user.myapplication;
 
-public class Meal {
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class Meal implements Serializable {
     private boolean vegetarian, meat, vegan;
-    private boolean[] meal;
+    private ArrayList<Boolean> meal = new ArrayList<>();
     private int points;
 
     public Meal() {
@@ -12,7 +16,8 @@ public class Meal {
         this.setVegetarian(vegetarian);
         this.setMeat(meat);
         this.setVegan(vegan);
-        this.setMeal(new boolean[]{vegetarian,meat,vegan});
+        //Boolean[] boolArray={meat, vegetarian, vegan};
+        //this.setMeal((ArrayList<Boolean>) Arrays.asList(boolArray));
         this.setPoints(0);
     }
 
@@ -48,11 +53,11 @@ public class Meal {
         this.points = points;
     }
 
-    public boolean[] getMeal() {
+    public ArrayList<Boolean> getMeal() {
         return meal;
     }
 
-    public void setMeal(boolean[] meal) {
+    public void setMeal(ArrayList<Boolean> meal) {
         this.meal = meal;
     }
 }

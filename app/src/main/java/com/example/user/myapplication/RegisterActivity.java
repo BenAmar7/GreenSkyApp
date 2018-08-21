@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean regComplete;
     private EditText textEMail, textPassword, textVerifyPassword;
     private String name, password, verifyPassword;
-    private DataBaseHelper dbHelper;
+    //private DataBaseHelper dbHelper;
     //private FirebaseDatabase databaseGreenSky;
     //private DatabaseReference usersDB;
     //private FirebaseAuth mAuth;
@@ -36,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         textEMail = (EditText) findViewById(R.id.eMail);
         textPassword = (EditText) findViewById(R.id.password);
         textVerifyPassword = (EditText) findViewById(R.id.verifyPassword);
-        dbHelper = new DataBaseHelper();
+        //dbHelper = new DataBaseHelper();
         //databaseGreenSky = FirebaseDatabase.getInstance();
         //usersDB = databaseGreenSky.getReference();
         //mAuth = FirebaseAuth.getInstance();
@@ -80,13 +80,16 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this, "Passwords don't match", Toast.LENGTH_SHORT).show();
             return;
         }
-        dbHelper.getmAuth().createUserWithEmailAndPassword(email, password).
+        DataBaseHelper.getInstance().getmAuth().createUserWithEmailAndPassword(email, password).
                 addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Registered successfully", Toast.LENGTH_SHORT).show();
-                            FirebaseUser user = dbHelper.getmAuth().getCurrentUser();
+                            FirebaseUser user = DataBaseHelper.getInstance().getmAuth().getCurrentUser();
+                            String uId = user.getUid();
+                            User newUser = new User(uId);
+                            DataBaseHelper.getInstance().getDB().child("users").child(uId).setValue(newUser);
                             finish();
                             Intent fb = new Intent(RegisterActivity.this, LoginActivity.class);
                             startActivity(fb);

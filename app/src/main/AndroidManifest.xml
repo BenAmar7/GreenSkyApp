@@ -23,6 +23,7 @@
         <activity android:name=".UserFlightsActivity"></activity>
         <activity android:name=".InformationActivity"></activity>
         <activity android:name=".MealsActivity"></activity>
+        <activity android:name=".BuyFlightsActivity"></activity>
     </application>
 
 </manifest>

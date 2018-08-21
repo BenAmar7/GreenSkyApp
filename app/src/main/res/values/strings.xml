@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="SelectIngredients">Select ingredients:</string>
+    <string name="Meat">Meat</string>
+    <string name="Rice">Rice</string>
+    <string name="Veggies">Veggies</string>
+    <string name="Chicken">Chicken</string>
+    <string name="Pasta">Pasta</string>
+    <string name="Tofu">Tofu</string>
+    <string name="Lettuce">Lettuce</string>
+    <string name="Almonds">Almonds</string>
+    <string name="Sauce">Sauce</string>
 </resources>
