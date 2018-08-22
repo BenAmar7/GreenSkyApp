@@ -14,7 +14,7 @@ public class InformationActivity extends AppCompatActivity {
     private void init() {
         mealsButton = (Button) findViewById(R.id.chooseMeal);
         infoButton = (Button) findViewById(R.id.watchWeather);
-        logedInUser = (User) getIntent().getSerializableExtra("user");
+        logedInUser = (User) getIntent().getSerializableExtra("logedInUser");
         currentFlight = (Flight) getIntent().getSerializableExtra("flight");
 
         mealsButton.setOnClickListener(new View.OnClickListener() {
@@ -23,6 +23,7 @@ public class InformationActivity extends AppCompatActivity {
                 Intent na = new Intent(InformationActivity.this, MealsActivity.class);
                 na.putExtra("logedInUser", logedInUser);
                 na.putExtra("flight", currentFlight);
+                finish();
                 startActivity(na);
             }
         });

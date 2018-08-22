@@ -15,10 +15,10 @@ import com.google.firebase.auth.FirebaseUser;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BuyFlightsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class BuyFlightsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private ListView flightsList;
-    private List<Flight> flights;
+    private List<Flight> flights, userFlights;
     private DataBaseHelper dbHelper;
     private ArrayAdapter<Flight> flightListAdapter;
     private String uId;
@@ -29,7 +29,7 @@ public class BuyFlightsActivity extends AppCompatActivity implements AdapterView
         buttonGoBack = (Button) findViewById(R.id.goBack);
         //dbHelper = new DataBaseHelper();
         flights = new ArrayList<Flight>();
-
+        userFlights = new ArrayList<Flight>();
         flights.add(new Flight("1111", "11:00", "16:00"));
         flights.add(new Flight("2222", "12:00", "17:00"));
         flights.add(new Flight("3333", "13:00", "18:00"));

@@ -9,7 +9,7 @@ public class Flight implements Serializable {
     private String numFlight;
     private String takeOff;
     private String Landing;
-    private Map<String, Meal> passengersList = new HashMap<>();
+    private Map<String, Long> passengersList = new HashMap<>();
     //private DataBaseHelper dbHelper = new DataBaseHelper();
 
     public Flight() {
@@ -23,9 +23,10 @@ public class Flight implements Serializable {
     }
 
     public void addUserToList(String user) {
-        this.passengersList.put(user, new Meal());
-        DataBaseHelper.getInstance().getDB().child("users").child(user).child("listFilghts").push().setValue(this);
-        DataBaseHelper.getInstance().getDB().child("flights").child(this.getNumFlight()).setValue(this);//.child("passengersList").push().setValue(this.getPassengersList());
+        this.passengersList.put(user, (long) 0);
+        DataBaseHelper.getInstance().getDB().child("users").child(user).child("listFilghts").child(this.getNumFlight()).setValue(this);
+        DataBaseHelper.getInstance().getDB().child("flights").child(this.getNumFlight()).setValue(this);
+        //.child("passengersList").push().setValue(this.getPassengersList());
     }
 
     @Override
@@ -33,11 +34,11 @@ public class Flight implements Serializable {
         return getNumFlight();
     }
 
-    public Map<String, Meal> getPassengersList() {
+    public Map<String, Long> getPassengersList() {
         return passengersList;
     }
 
-    public void setPassengersList(Map<String, Meal> passengersList) {
+    public void setPassengersList(Map<String, Long> passengersList) {
         this.passengersList = passengersList;
     }
 

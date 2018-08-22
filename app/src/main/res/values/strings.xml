@@ -2,12 +2,20 @@
     <string name="app_name">My Application</string>
     <string name="SelectIngredients">Select ingredients:</string>
     <string name="Meat">Meat</string>
-    <string name="Rice">Rice</string>
-    <string name="Veggies">Veggies</string>
+    <string name="Meatballs">Meatballs</string>
     <string name="Chicken">Chicken</string>
-    <string name="Pasta">Pasta</string>
+
+    <string name="Egg">Egg</string>
+    <string name="Fish">Fish</string>
+    <string name="Toast">Toast</string>
+
     <string name="Tofu">Tofu</string>
-    <string name="Lettuce">Lettuce</string>
-    <string name="Almonds">Almonds</string>
-    <string name="Sauce">Sauce</string>
+    <string name="Lentil_patties">Lentil patties</string>
+    <string name="Eggplant_in_Tehina">Eggplant in Tehina</string>
+
+    <string name="Vegetable_Salad">Vegetable Salad</string>
+    <string name="Rice">Rice</string>
+    <string name="Puree">Puree</string>
+    <string name="Bean">Bean</string>
+
 </resources>

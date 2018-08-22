@@ -45,6 +45,15 @@ public class User implements Serializable {
         this.listFlights = listFlights;
     }
 
+    public void updateFlight(Flight flight,long points){
+        for (Flight flightsUser :listFlights) {
+            if (flightsUser.getNumFlight().equals(flight.getNumFlight())){
+                flightsUser.getPassengersList().put(this.getName(),points);
+                break;
+            }
+        }
+    }
+
     public ArrayList<Flight> getListFlights() {
         return this.listFlights;
     }

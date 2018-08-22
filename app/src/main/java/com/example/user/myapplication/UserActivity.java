@@ -107,14 +107,8 @@ public class UserActivity extends AppCompatActivity {
                     ArrayList<Flight> listFlights = new ArrayList<>();
                     user = dataSnapshot.getValue(User.class);
                     Object obj = dataSnapshot.getValue(User.class);
-    /*                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                        Log.d(String.valueOf(1), ""+ds);
-
-                    }*/
                     for (DataSnapshot snapChild : dataSnapshot.getChildren()) {
                         for (DataSnapshot snapGrandChild : snapChild.getChildren()) {
-                            //Log.d("GRAND_CHILD_KEY", snapGrandChild.getKey());
-                            //Log.d("GRAND_CHILD_VALUE", String.valueOf(snapGrandChild.getValue()));
                             Flight flight = snapGrandChild.getValue(Flight.class);
                             listFlights.add(flight);
                         }
