@@ -6,27 +6,41 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Flight implements Serializable {
-    private String numFlight;
-    private String takeOff;
-    private String Landing;
+    private String numFlight, takeOff, Landing, from, whereTo;
     private Map<String, Long> passengersList = new HashMap<>();
     //private DataBaseHelper dbHelper = new DataBaseHelper();
 
-    public Flight() {
+    public String getFrom() {
+        return from;
     }
 
-    public Flight(String numFlight, String takeOff, String landing) {
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getWhereTo() {
+        return whereTo;
+    }
+
+    public void setWhereTo(String whereTo) {
+        this.whereTo = whereTo;
+    }
+
+    public Flight() {
+
+    }
+
+    public Flight(String numFlight, String takeOff, String landing,String from, String whereTo) {
         this.numFlight = numFlight;
         this.takeOff = takeOff;
         this.Landing = landing;
-        //setPassengersList(new HashMap<String, Meal>());
+        this.from=from;
+        this.whereTo = whereTo;
     }
 
     public void addUserToList(String user) {
         this.passengersList.put(user, (long) 0);
-        DataBaseHelper.getInstance().getDB().child("users").child(user).child("listFilghts").child(this.getNumFlight()).setValue(this);
         DataBaseHelper.getInstance().getDB().child("flights").child(this.getNumFlight()).setValue(this);
-        //.child("passengersList").push().setValue(this.getPassengersList());
     }
 
     @Override

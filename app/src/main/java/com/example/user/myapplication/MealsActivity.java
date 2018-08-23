@@ -60,34 +60,34 @@ public class MealsActivity extends AppCompatActivity {
                 break;
             case R.id.meatballs:
                 if (checked) {
-                    selection.add("Tofu");
+                    selection.add("Meatballs");
                 } else {
-                    selection.remove("Tofu");
+                    selection.remove("Meatballs");
                 }
                 break;
 
 
             case R.id.chicken:
                 if (checked) {
-                    selection.add("Sauce");
+                    selection.add("Chicken");
                 } else {
-                    selection.remove("Sauce");
+                    selection.remove("Chicken");
                 }
                 break;
 
             case R.id.egg:
                 if (checked) {
-                    selection.add("Pasta");
+                    selection.add("Egg");
                 } else {
-                    selection.remove("Pasta");
+                    selection.remove("Egg");
                 }
                 break;
 
             case R.id.fish:
                 if (checked) {
-                    selection.add("Lettuce");
+                    selection.add("Fish");
                 } else {
-                    selection.remove("Lettuce");
+                    selection.remove("Fish");
                 }
                 break;
 
@@ -110,18 +110,18 @@ public class MealsActivity extends AppCompatActivity {
 
             case R.id.lentil_patties:
                 if (checked) {
-                    selection.add("lentil patties");
+                    selection.add("Lentil patties");
                 } else {
-                    selection.remove("lentil patties");
+                    selection.remove("Lentil patties");
                 }
                 break;
 
 
             case R.id.eggplant_in_tehina:
                 if (checked) {
-                    selection.add("eggplant in tehina");
+                    selection.add("Eggplant in Tehina");
                 } else {
-                    selection.remove("eggplant in tehina");
+                    selection.remove("Eggplant in Tehina");
                 }
                 break;
 
@@ -187,7 +187,8 @@ public class MealsActivity extends AppCompatActivity {
     public void checkAndLock() {
         if (selection.size() >= 3) {
             for (CheckBox box : checkBoxList) {
-                box.setEnabled(false);
+                if (!selection.contains(box.getText()))
+                    box.setEnabled(false);
             }
         } else {
             for (CheckBox box : checkBoxList) {
@@ -196,14 +197,14 @@ public class MealsActivity extends AppCompatActivity {
         }
     }
 
-    public void updatePoints(long points){
-        flight.getPassengersList().put(logedInUser.getName(),points);
-        logedInUser.setPoints(logedInUser.getPoints()+points);
-        logedInUser.updateFlight(flight,points);
+    public void updatePoints(long points) {
+        flight.getPassengersList().put(logedInUser.getName(), points);
+        logedInUser.setPoints(logedInUser.getPoints() + points);
+        //logedInUser.updateFlight(flight.getNumFlight(),points);
         DataBaseHelper.getInstance().getDB().child("users").child(logedInUser.getName()).setValue(logedInUser);
         DataBaseHelper.getInstance().getDB().child("flights").child(flight.getNumFlight()).setValue(flight);
-        Intent na = new Intent(MealsActivity.this, InformationActivity.class);
-        na.putExtra("logedInUser", logedInUser);
+        Intent na = new Intent(MealsActivity.this, UserFlightsActivity.class);
+        na.putExtra("user", logedInUser);
         na.putExtra("flight", flight);
         finish();
         startActivity(na);

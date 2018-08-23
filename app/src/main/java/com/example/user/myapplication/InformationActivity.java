@@ -19,7 +19,7 @@ public class InformationActivity extends AppCompatActivity {
 
         mealsButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {  //need to close this option after choosing it
                 Intent na = new Intent(InformationActivity.this, MealsActivity.class);
                 na.putExtra("logedInUser", logedInUser);
                 na.putExtra("flight", currentFlight);

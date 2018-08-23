@@ -18,12 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
-    //private DataBaseHelper dbHelper;
     private FirebaseUser logedInUser;
     private User user;
     private Intent logInIntent;
     private TextView userName, userPoints;
-    private Button buttonFlights, buttonInfo, buttonBuyFlights;
+    private Button buttonFlights, buttonInfo, buttonBuyFlights, buttonCreateBD;
     private List<User> allUsers = new ArrayList<>();
 
     public void init() {
@@ -37,6 +36,7 @@ public class UserActivity extends AppCompatActivity {
         buttonFlights = (Button) findViewById(R.id.watchUserFlights);
         buttonInfo = (Button) findViewById(R.id.getInformation);
         buttonBuyFlights = (Button) findViewById(R.id.buyFlights);
+        buttonCreateBD = (Button) findViewById(R.id.createDB);
 
         buttonFlights.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,21 +65,22 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        /*dbHelper.getUsersDB().child("users").addValueEventListener(new ValueEventListener() {
+        buttonCreateBD.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    User newUser = child.getValue(User.class);
-                    allUsers.add(newUser);
+            public void onClick(View v) {
+                ArrayList<Flight> flights = new ArrayList<>();
+                flights.add(new Flight("1111", "11:00", "16:00","Tel-aviv","new york"));
+                flights.add(new Flight("2222", "12:00", "17:00","Paris","new york"));
+                flights.add(new Flight("3333", "13:00", "18:00","Tel-aviv","London"));
+                flights.add(new Flight("4444", "14:00", "19:00","Madrid","Tel-aviv"));
+
+                for (Flight flight : flights) {
+                    DataBaseHelper.getInstance().getDB().child("flights").child(flight.getNumFlight()).setValue(flight);
                 }
             }
+        });
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });s
-*/
         logedInUser = DataBaseHelper.getInstance().getmAuth().getCurrentUser();
         String uid = logedInUser.getUid();
         getUserFromDB(uid);
@@ -104,12 +105,11 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 try {
-                    ArrayList<Flight> listFlights = new ArrayList<>();
+                    ArrayList<String> listFlights = new ArrayList<>();
                     user = dataSnapshot.getValue(User.class);
-                    Object obj = dataSnapshot.getValue(User.class);
                     for (DataSnapshot snapChild : dataSnapshot.getChildren()) {
                         for (DataSnapshot snapGrandChild : snapChild.getChildren()) {
-                            Flight flight = snapGrandChild.getValue(Flight.class);
+                            String flight = snapGrandChild.getValue(String.class);
                             listFlights.add(flight);
                         }
                     }
@@ -118,8 +118,6 @@ public class UserActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                //DataBaseHelper.getInstance().getDB().child("users").child(user.getName()).child("listFlights").getKey();
-                //user.setListFlights(DataBaseHelper.getInstance().getDB().child("users").child(user.getName()).child("listFlights").getKey());
                 getLogInUser();
             }
 
@@ -129,20 +127,5 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
-
-/*
-    public void getUserFromDB(final String userID, final ProfileActivity activity){
-        dbRef.child(USERS).child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull com.google.firebase.database.DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-                activity.setUser(user);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError Object ){
-
-            }
-        });
-    }*/
 
 }

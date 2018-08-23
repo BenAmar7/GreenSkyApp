@@ -19,7 +19,7 @@ public class User implements Serializable {
     //private long id;
     private String name;
     private long points;
-    private ArrayList<Flight> listFlights = new ArrayList<>();
+    private ArrayList<String> listFlights = new ArrayList<>();
     //private DataBaseHelper dbHelper = new DataBaseHelper();
 
 
@@ -41,20 +41,20 @@ public class User implements Serializable {
         this.points = points;
     }
 
-    public void setListFlights(ArrayList<Flight> listFlights) {
+    public void setListFlights(ArrayList<String> listFlights) {
         this.listFlights = listFlights;
     }
 
-    public void updateFlight(Flight flight,long points){
+    /*public void updateFlight(Flight flight,long points){
         for (Flight flightsUser :listFlights) {
             if (flightsUser.getNumFlight().equals(flight.getNumFlight())){
                 flightsUser.getPassengersList().put(this.getName(),points);
                 break;
             }
         }
-    }
+    }*/
 
-    public ArrayList<Flight> getListFlights() {
+    public ArrayList<String> getListFlights() {
         return this.listFlights;
     }
 
