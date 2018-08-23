@@ -17,6 +17,9 @@ public class InformationActivity extends AppCompatActivity {
         logedInUser = (User) getIntent().getSerializableExtra("logedInUser");
         currentFlight = (Flight) getIntent().getSerializableExtra("flight");
 
+        if (currentFlight.getPassengersList().get(logedInUser.getName()) != 0)
+            mealsButton.setEnabled(false);
+
         mealsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {  //need to close this option after choosing it
