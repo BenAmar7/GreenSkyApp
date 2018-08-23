@@ -22,7 +22,7 @@ public class UserActivity extends AppCompatActivity {
     private User user;
     private Intent logInIntent;
     private TextView userName, userPoints;
-    private Button buttonFlights, buttonInfo, buttonBuyFlights, buttonCreateBD;
+    private Button buttonFlights, buttonBuyFlights, buttonCreateBD;
     private List<User> allUsers = new ArrayList<>();
 
     public void init() {
@@ -34,7 +34,6 @@ public class UserActivity extends AppCompatActivity {
 
 
         buttonFlights = (Button) findViewById(R.id.watchUserFlights);
-        buttonInfo = (Button) findViewById(R.id.getInformation);
         buttonBuyFlights = (Button) findViewById(R.id.buyFlights);
         buttonCreateBD = (Button) findViewById(R.id.createDB);
 
@@ -47,14 +46,6 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        buttonInfo.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent na = new Intent(UserActivity.this, InformationActivity.class);
-                startActivity(na);
-            }
-        });
 
         buttonBuyFlights.setOnClickListener(new View.OnClickListener() {
 
@@ -69,10 +60,10 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<Flight> flights = new ArrayList<>();
-                flights.add(new Flight("1111", "11:00", "16:00","Tel-aviv","new york"));
-                flights.add(new Flight("2222", "12:00", "17:00","Paris","new york"));
-                flights.add(new Flight("3333", "13:00", "18:00","Tel-aviv","London"));
-                flights.add(new Flight("4444", "14:00", "19:00","Madrid","Tel-aviv"));
+                flights.add(new Flight("1111", "11:00", "16:00", "Tel-aviv", "new york"));
+                flights.add(new Flight("2222", "12:00", "17:00", "Paris", "new york"));
+                flights.add(new Flight("3333", "13:00", "18:00", "Tel-aviv", "London"));
+                flights.add(new Flight("4444", "14:00", "19:00", "Madrid", "Tel-aviv"));
 
                 for (Flight flight : flights) {
                     DataBaseHelper.getInstance().getDB().child("flights").child(flight.getNumFlight()).setValue(flight);
